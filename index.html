@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Estação Meteorológica</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+   <header>
+    <h1>Estação Meteorológica</h1>
+    
+
+    <p class="valorcard">Online</p>
+
+
+    <div class="dataHora">
+        <p id="data">28/09/2026</p>
+        <p id="hora">14:30</p>
+    </div>
+    </header>
+
+    <div class="container">
+
+        <div class="temperatura">
+
+            <p class="tempo">🌡️Temperatura</p>
+            <p id="valorTemperatura">25°</p>
+
+            <p class="atualT">Temperatura atual</p>
+
+        </div>
+
+        <div class="umidade">
+
+
+            <p class="tempo">💧Umidade</p>
+            <p id="valorUmidade">30%</p>
+            <p class="atualT">Umidade atual</p>
+        </div>
+    </div>
+
+
+      <h2>Gráficos</h2>
+    <div class="graficos">
+      
+
+        <div class="gTemperatura">
+
+            <h3>Temperatura</h3>
+            <canvas id="graficoT"></canvas>
+        </div>
+
+        <div class="gUmidade">
+            <h3>Umidade</h3>
+
+            <canvas id="graficoU"></canvas>
+        </div>
+    </div>
+
+         <h2>Localização da Estação</h2>
+        <div class = mapa-container>
+        <div id="mapa"></div>
+    </div>
+
+
+    
+        <h2>Alertas</h2>
+    <section class="alertas">
+  
+    <div id="alerta">
+        <p>Nenhum alerta no momento</p>
+
+    </div>
+    </section>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
