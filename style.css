@@ -24,7 +24,7 @@ header{
     border-radius: 20px;
     border: 1px solid #45464c;
     margin-bottom: 60px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.0.25);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
 }
 @media (max-width:700px){
     header{
@@ -59,17 +59,6 @@ h1{
     margin:5px 0;
 }
 
-.localizacao, .status{
-    margin-top: 30px;
-    width: 90%;
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 25px;
-    background-color: #38393e;
-    border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.0.25);
-}
-
 
 .valorcard{
     text-align: center;
@@ -77,27 +66,6 @@ h1{
     color: #f5f5f5;
     font-size: 18px;
     font-weight: bold;
-}
-
-.informacoes{
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    gap:20px;
-    flex-wrap: wrap;
-
-}
-
-.tituloCard{
-    font-size: 18px;
-    margin:0 0 10px;
-}
-
-.valorCard{
-    font-size: 24px;
-    font-weight: bold;
-    margin:0;
-    color:#b8b8bd;
 }
 
 .container{
@@ -116,12 +84,13 @@ h1{
 .umidade,
 .temperatura{
 height: 220px;
-width: 450px;
+width: 100%;
+max-width: 450px;
 padding: 25px;
 background-color:#38393e;
 border-radius: 20px;
 border:1px solid #45464c;
-box-shadow: 0 4px 15px rgba(0,0,0,0.0.25);
+box-shadow: 0 4px 15px rgba(0,0,0,0.25);
 
 display: flex;
 justify-content: center;
@@ -145,7 +114,7 @@ flex-direction: column;
 h2{
     text-align: center;
     font-size: 25px;
-    font-weight: 600px;
+    font-weight: 600;
     margin: 35px 0 20px;
     color:#f5f5f5;
 }
@@ -165,7 +134,7 @@ h2{
     padding: 20px;
     background-color: #38393e;
     border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.0.25);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
 }
 .gTemperatura h3,
 .gUmidade h3{
@@ -188,6 +157,7 @@ h2{
     color:#b8b8bd;
     font-size: 16px;
     line-height: 1.6;
+    white-space: pre-line;
 
 }
 
@@ -228,7 +198,7 @@ h3{
     width: 100%;
     height: 320px;
     border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.0.25);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
 }
 
 @media(max-width:700px){

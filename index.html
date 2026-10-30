@@ -52,19 +52,22 @@
         <div class="gTemperatura">
 
             <h3>Temperatura</h3>
-            <canvas id="graficoT"></canvas>
+            <canvas id="graficoT" role ="img" 
+            aria-label="Gráfico de variação da temperatura ao longo do tempo"></canvas>
         </div>
 
         <div class="gUmidade">
             <h3>Umidade</h3>
 
-            <canvas id="graficoU"></canvas>
+            <canvas id="graficoU" role ="img"
+            aria-label="Gráfico de variação de umidade ao longo do tempo"></canvas>
         </div>
     </div>
 
          <h2>Localização da Estação</h2>
         <div class = mapa-container>
-        <div id="mapa"></div>
+        <div id="mapa" role="img"
+        aria-label="Mapa da localização da Estação Meteorológica"></div>
     </div>
 
 
@@ -72,7 +75,7 @@
         <h2>Alertas</h2>
     <section class="alertas">
   
-    <div id="alerta">
+    <div id="alerta" role="status" aria-live="polite" aria-atomic="true">
         <p>Nenhum alerta no momento</p>
 
     </div>

@@ -5,11 +5,11 @@
 const GraficoT = new Chart(graficoT,{
     type: "line",
     data:{
-        labels:["10:00","11:00","12:00"],
+        labels:[],
         datasets:[{label: "Temperatura",
             borderWidth: 2,
             pointRadius:5,
-            data:[25,26,24]
+            data:[]
         }]
     },
     options:{
@@ -53,16 +53,16 @@ const GraficoT = new Chart(graficoT,{
  const valoresTemperatura = GraficoT.data.datasets[0].data;
  let temperaturaAtual = valoresTemperatura[ valoresTemperatura.length - 1];                          
 
- cardTemperatura = document.getElementById("valorTemperatura");
+  const cardTemperatura = document.getElementById("valorTemperatura");
 
 
  //valor muda automaticamente
- GraficoT.data.labels.push("13:00");            //adiciona no x
- valoresTemperatura.push(30);                   //adiciona no y     
+ GraficoT.data.labels.push();            //adiciona no x
+ valoresTemperatura.push();                   //adiciona no y     
 
  temperaturaAtual = valoresTemperatura[valoresTemperatura.length - 1];        // descobrir novamente o  ultimo valor da lista
 
- cardTemperatura.innerHTML = temperaturaAtual + "°";               //elemento do html
+ cardTemperatura.textContent = temperaturaAtual + "°C";               //elemento do html
  
 
 
@@ -76,11 +76,11 @@ const graficoU = document.getElementById("graficoU");
  const GraficoU = new Chart(graficoU,{
     type:"line",
     data:{
-        labels:["10:00","11:00","12:00"],
+        labels:[],
         datasets:[{label: "Umidade",
             borderWidth: 2,
             pointRadius:5,
-            data:[70,72,68]
+            data:[]
         }]
     },
     options:{
@@ -125,50 +125,23 @@ const graficoU = document.getElementById("graficoU");
 const valoresUmidade = GraficoU.data.datasets[0].data;
 let umidadeAtual = valoresUmidade[valoresUmidade.length - 1];
 
-cardUmidade = document.getElementById("valorUmidade");
+const cardUmidade = document.getElementById("valorUmidade");
 
 
 //valor muda automaticamente
-GraficoU.data.labels.push("13:00")
-valoresUmidade.push(60);
+GraficoU.data.labels.push()
+valoresUmidade.push();
 umidadeAtual = valoresUmidade[valoresUmidade.length - 1];
 
-cardUmidade.innerHTML = umidadeAtual + "%";
+cardUmidade.textContent = umidadeAtual + "%";
 
 GraficoU.update();
 
-/*valores dos cards, umidade e temperatura
-const temperatura = document.getElementById("valorTemperatura").innerHTML;
-const umidade = document.getElementById("valorUmidade").innerHTML;
-
-const temperaturaNumero = parseInt(temperatura);
-const umidadeNumero = parseInt(umidade);
-*/
 
 //card alertas
 const alerta = document.getElementById("alerta");
 
-let mensagem = "";
-if(temperaturaAtual > 30){
 
-    mensagem += "⚠️ Temperatura elevada<br>" ;
-}
-
-if(umidadeAtual < 40){
-    
-    mensagem += "💧 Umidade baixa";
-}
-else if(umidadeAtual > 70){
-    mensagem += "💧 Umidade alta";
-}
-
-if(mensagem === ""){
-    mensagem = "Nenhum alerta no momento"
-}
-
-alerta.innerHTML = mensagem;
-
-//mapa
 
 const mapa = L.map("mapa").setView([-23.167795, -46.917690], 13);
 
@@ -182,7 +155,110 @@ L.marker([-23.167795,-46.919560 ])
     .bindPopup("<b>UNIP</b><br>Jundiaí - SP")
     .openPopup();
 
+
 //data e hora
+
+fetch("https://estacao-metereologica-api.onrender.com/leituras/ultima").then
+(function(resposta){
+    return resposta.json();
+})
+
+.then(function(leitura){
+    let mensagem = "";
+
+     cardTemperatura.textContent = leitura.temperatura + "°C";
+     cardUmidade.textContent = leitura.umidade + "%";
+
+     if(leitura.temperatura > 22){
+        mensagem += "⚠️ Temperatura elevada\n"
+     }
+     else if(leitura.temperatura < 20){
+        mensagem += "⚠️ Temperatura baixa\n"
+     }
+        if(leitura.umidade < 40){
+             mensagem += "💧 Umidade baixa";
+        }
+        else if(leitura.umidade > 60){
+         mensagem += "💧 Umidade alta";
+        }
+        
+        if(mensagem === ""){
+       mensagem = "Nenhum alerta no momento"
+        }
+
+        alerta.textContent = mensagem;
+
+
+     const elementoData = document.getElementById("data");
+     const elementoHora = document.getElementById("hora");
+
+     const dataHora = new Date(leitura.data_hora);
+
+     elementoData.textContent = dataHora.toLocaleDateString("pt-BR",{
+        timeZone: "America/Sao_Paulo"
+
+     });
+
+     elementoHora.textContent = dataHora.toLocaleTimeString("pt-BR",{
+        hour:"2-digit",
+        minute: "2-digit",
+        timeZone:"America/Sao_Paulo"
+     });
+
+})
+
+.catch(function(erro){
+    console.log("Erro ao buscar dados:", erro);
+});
+
+fetch("https://estacao-metereologica-api.onrender.com/leituras?limite=200")
+    .then(function (resposta) {
+        return resposta.json();
+    })
+
+    //separar valores de temperatura
+
+    .then(function (leituras) {
+
+        leituras.sort(function(a,b){
+            return new Date(a.data_hora) - new Date(b.data_hora);
+        });
+
+        const horarios = leituras.map(function (leitura) {
+        return new Date(leitura.data_hora).toLocaleString("pt-BR", {
+        timeZone: "America/Sao_Paulo",
+        day: "2-digit",
+        month: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+});
+        const temperaturas = leituras.map(function(leitura){
+            return leitura.temperatura;
+        });
+        //separar valores de umidade
+
+        const umidades = leituras.map(function(leitura){
+            return leitura.umidade;
+        });
+        
+        //atualizar o grafico de temperatura
+
+        GraficoT.data.labels = horarios;
+        GraficoT.data.datasets[0].data = temperaturas;
+        GraficoT.update();
+
+        //atualizar grafico de umidade
+
+        GraficoU.data.labels = horarios;
+        GraficoU.data.datasets[0].data = umidades;
+        GraficoU.update();
+
+    })
+    .catch(function (erro) {
+        console.log("Erro ao buscar o histórico:", erro);
+    });
+
 
 
     
